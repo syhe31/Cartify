@@ -1,5 +1,6 @@
 package com.example.cartify.ui.screens
 
+import android.content.Intent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -27,16 +28,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.cartify.R
+import com.example.cartify.core.UserSession
 import com.example.cartify.core.model.Resource
+import com.example.cartify.core.utils.logd
+import com.example.cartify.ui.activities.LoginActivity
+import com.example.cartify.ui.components.CommonDialog
+import com.example.cartify.ui.components.SolidBtn
 import com.example.cartify.ui.components.TextH1
 import com.example.cartify.ui.components.TextH2
 import com.example.cartify.ui.theme.customColors
@@ -47,6 +57,8 @@ import com.google.accompanist.placeholder.placeholder
 
 @Composable
 fun ProfileScreen(navController: NavHostController) {
+
+    var showLogoutDialog by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -67,16 +79,40 @@ fun ProfileScreen(navController: NavHostController) {
                     verticalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
                     UserInfo()
-                    ProfileDiscount()
+                    if (UserSession.isLogin) ProfileDiscount()
                     OrderCard()
                     ActivityCard()
                     ServiceCard()
+
+                    SolidBtn(
+                        "登出",
+                        onClick = {
+                            showLogoutDialog = true
+                        },
+                        enable = UserSession.isLogin,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+
+                    if (showLogoutDialog) {
+                        CommonDialog(
+                            message = "你確定要登出嗎？",
+                            onConfirm = {
+                                logd("onConfirm")
+                                UserSession.userName = ""
+                            },
+                            onCancel = {
+                                logd("onCancel")
+                            },
+                            onDismissRequest = {
+                                logd("onDismissRequest")
+                                showLogoutDialog = false
+                            })
+                    }
+
                 }
             }
         }
     }
-
-
 }
 
 @Composable
@@ -93,6 +129,7 @@ fun TopBg() {
 
 @Composable
 fun UserInfo() {
+    val context = LocalContext.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -100,7 +137,7 @@ fun UserInfo() {
         horizontalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         Image(
-            painter = painterResource(R.drawable.ic_avatar_capoo),
+            painter = painterResource(R.drawable.ic_logo_gray),
             contentDescription = null,
             modifier = Modifier
                 .size(100.dp)
@@ -112,8 +149,17 @@ fun UserInfo() {
                 .fillMaxHeight(),
             verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
         ) {
-            TextH1(text = "Hi, Capoo", color = Color.White)
-            TextH2(text = "會員編號：123456789", color = Color.White)
+            if (UserSession.isLogin) {
+                TextH1(text = "Hi, ${UserSession.userName}", color = Color.White)
+                TextH2(text = "會員編號：123456789", color = Color.White)
+            } else {
+                Box(modifier = Modifier.clickable {
+                    val intent = Intent(context, LoginActivity::class.java)
+                    context.startActivity(intent)
+                }) {
+                    TextH1(text = "請先點我登入", color = Color.White)
+                }
+            }
         }
     }
 }

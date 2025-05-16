@@ -27,6 +27,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activities.ProductDetailActivity" />
+        <activity
+            android:name=".ui.activities.LoginActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

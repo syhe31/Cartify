@@ -22,8 +22,8 @@ import com.example.cartify.ui.screens.ProfileScreen
 import com.example.cartify.ui.theme.customColors
 
 @Composable
-fun NavigationGraph(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = BottomNavItem.Home.route) {
+fun NavigationGraph(navController: NavHostController, startDestination: String) {
+    NavHost(navController = navController, startDestination = startDestination) {
         composable(BottomNavItem.Home.route) { HomeScreen(navController) }
         composable(BottomNavItem.Explore.route) {
             Screen(
@@ -41,8 +41,11 @@ fun NavigationGraph(navController: NavHostController) {
         composable(BottomNavItem.Profile.route) { ProfileScreen(navController) }
 
 
-        composable("productDetail/{productId}", // 定義路由的名稱和參數
-            arguments = listOf(navArgument("productId") { type = NavType.StringType }) // 定義參數 定了路由參數 productId 的類型是String
+        composable(
+            "productDetail/{productId}", // 定義路由的名稱和參數
+            arguments = listOf(navArgument("productId") {
+                type = NavType.StringType
+            }) // 定義參數 定了路由參數 productId 的類型是String
         ) { backStackEntry -> //backStackEntry 是傳遞給 composable 的一個參數，包含當前導航堆疊的所有信息
             // 從路由中的參數獲取值 可以使用 backStackEntry 來訪問從導航中傳遞過來的參數。在這裡，我們使用它來獲取
             // backStackEntry.arguments 是一個 Bundle?，用來存儲導航過程中傳遞的所有參數

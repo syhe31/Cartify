@@ -15,11 +15,9 @@ import com.example.cartify.ui.components.navigation.BottomNavItem
 import com.example.cartify.ui.components.navigation.NavigationGraph
 
 @Composable
-fun MainScreen() {
+fun MainScreen(startDestination: String) {
     val navController = rememberNavController()
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
-
-
 
     Scaffold(
         topBar = { HeaderBar() },
@@ -31,7 +29,7 @@ fun MainScreen() {
         }
     ) { innerPadding ->
         Surface(modifier = Modifier.padding(innerPadding), color = Color.White) {
-            NavigationGraph(navController)
+            NavigationGraph(navController, startDestination)
         }
     }
 }
