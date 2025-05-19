@@ -14,12 +14,12 @@ fun Any.logd(message: String, tag: String? = null) {
     Log.d(logTag, message)
 }
 
-fun Any.logi(message: String, tag: String? = null) = {
+fun Any.logi(message: String, tag: String? = null) {
     val logTag = tag ?: TAG
     Log.i(logTag, message)
 }
 
-fun Any.logw(message: String, tag: String? = null) = {
+fun Any.logw(message: String, tag: String? = null) {
     val logTag = tag ?: TAG
     Log.w(logTag, message)
 }
