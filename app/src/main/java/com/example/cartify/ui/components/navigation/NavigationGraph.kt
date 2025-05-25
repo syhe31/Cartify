@@ -17,6 +17,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.cartify.ui.screens.ExploreScreen
 import com.example.cartify.ui.screens.HomeScreen
 import com.example.cartify.ui.screens.ProfileScreen
 import com.example.cartify.ui.theme.customColors
@@ -25,12 +26,7 @@ import com.example.cartify.ui.theme.customColors
 fun NavigationGraph(navController: NavHostController, startDestination: String) {
     NavHost(navController = navController, startDestination = startDestination) {
         composable(BottomNavItem.Home.route) { HomeScreen(navController) }
-        composable(BottomNavItem.Explore.route) {
-            Screen(
-                BottomNavItem.Explore.label,
-                navController
-            )
-        }
+        composable(BottomNavItem.Explore.route) { ExploreScreen(navController) }
         composable(BottomNavItem.Notification.route) {
             Screen(
                 BottomNavItem.Notification.label,
