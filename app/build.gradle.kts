@@ -83,6 +83,8 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
     implementation(libs.coil.compose)
+    implementation(libs.androidx.biometric)
+    implementation(libs.androidx.appcompat)
 
 
     implementation("com.google.dagger:hilt-android:2.56.1")

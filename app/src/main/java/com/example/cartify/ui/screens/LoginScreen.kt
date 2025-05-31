@@ -1,5 +1,6 @@
 package com.example.cartify.ui.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -38,6 +39,7 @@ import androidx.compose.ui.unit.sp
 import com.example.cartify.MainActivity
 import com.example.cartify.R
 import com.example.cartify.core.UserSession
+import com.example.cartify.core.utils.BiometricHelper
 import com.example.cartify.ui.activities.LoginActivity
 import com.example.cartify.ui.components.ImgWithCoil
 import com.example.cartify.ui.components.InputText
@@ -69,11 +71,33 @@ fun LoginScreen() {
                 Logo()
                 Spacer(modifier = Modifier.height(10.dp))
                 UserAndPwd()
+                Spacer(modifier = Modifier.height(10.dp))
+                Fingerprint()
                 Spacer(Modifier.height(50.dp))
             }
         }
     }
 }
+
+@Composable
+fun Fingerprint() {
+    val context = LocalContext.current
+    SolidBtn("指紋辨識", onClick = {
+        BiometricHelper.authenticate(
+            context = context,
+            onSuccess = {
+                Toast.makeText(context, "指紋辨識成功！", Toast.LENGTH_SHORT).show()
+            },
+            onError = { error ->
+                Toast.makeText(context, "辨識失敗: $error", Toast.LENGTH_SHORT).show()
+            },
+            onCancel = {
+                Toast.makeText(context, "用戶取消辨識", Toast.LENGTH_SHORT).show()
+            }
+        )
+    }, modifier = Modifier)
+}
+
 
 @Composable
 fun Logo() {
