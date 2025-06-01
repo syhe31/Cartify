@@ -95,7 +95,7 @@ fun Fingerprint() {
                 Toast.makeText(context, "用戶取消辨識", Toast.LENGTH_SHORT).show()
             }
         )
-    }, modifier = Modifier)
+    }, modifier = Modifier.fillMaxWidth())
 }
 
 
