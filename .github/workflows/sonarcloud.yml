@@ -34,7 +34,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       with:
         args: >
-          -Dsonar.projectKey=syhe31
+          -Dsonar.projectKey=syhe31_Cartify
           -Dsonar.organization=syhe31
           -Dsonar.host.url=https://sonarcloud.io
 
