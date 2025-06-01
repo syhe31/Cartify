@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.dagger.hilt)
 //    id("com.google.devtools.ksp")
 //    id("com.google.dagger.hilt.android") version "2.56.1" apply false
+    id("org.sonarqube") version "4.3.1.3277"
 }
 
 hilt {
